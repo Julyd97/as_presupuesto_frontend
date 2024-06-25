@@ -1,0 +1,17 @@
+.LoginFont{
+
+    background-image: url('../assets/LoginBackground.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+h1, label{
+    color: white;
+}
