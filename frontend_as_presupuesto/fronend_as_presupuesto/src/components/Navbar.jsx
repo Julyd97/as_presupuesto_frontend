@@ -1,19 +1,20 @@
 // src/components/Navbar.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
+import LogoGM from '../assets/LogoGM.png';
 
 const Navbar = () => {
   return (
     <nav>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
+      <ul className='nav'>
+        <li className='nav-item'>
+          <Link to="/" className='navbar-brand'><img src={LogoGM} alt="LogoGM" width="50" height="60"/></Link>
         </li>
-        <li>
-          <Link to="/dashboard">Dashboard</Link>
+        <li className='nav-item'>
+          <Link to="/dashboard" className='nav-link'>Dashboard</Link>
         </li>
-        <li>
-          <Link to="/login">Login</Link>
+        <li className='nav-item'>
+          <Link to="/login" className='nav-link'>Login</Link>
         </li>
       </ul>
     </nav>

@@ -16,11 +16,11 @@ export default function LoginPage() {
   return (
     <div className={`${classes.LoginFont}`}>
       <form onSubmit={handleSubmit}>
-        <h1>Ingresa a AS Presupuesto PTE</h1>
+        <h1 style={{color : 'white'}}>Ingresa a AS Presupuesto PTE</h1>
         <div>
-          <label className="form-label">Correo</label>
+          <label className="form-label" style={{color : 'white'}}>Correo</label>
           <div className="row justify-content-center">
-            <div className="col-sm-10">
+            <div className="col-sm-6">
               <input
                 type="text"
                 className="form-control"
@@ -31,9 +31,9 @@ export default function LoginPage() {
           </div>
         </div>
         <div>
-          <label className="col-form-label">Contrasena</label>
+          <label className="col-form-label" style={{color : 'white'}}>Contrasena</label>
           <div className="row justify-content-center">
-            <div className="col-sm-8">
+            <div className="col-sm-6">
               <input
                 type="password"
                 className="form-control"
@@ -45,7 +45,7 @@ export default function LoginPage() {
         </div>
 
         <button type="submit" className="btn btn-primary mt-3">
-          Login
+          Ingresar
         </button>
       </form>
     </div>
