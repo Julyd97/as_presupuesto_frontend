@@ -18,9 +18,18 @@ const Dashboard = () => {
   return (
     <>
       <h1>This is the dashboard</h1>
-      <button onClick={openModal} className="button">Open Modal</button>
-      <BootstrapModal show={showModal} handleClose={closeModal}>
-        <p>This is the content inside the modal.</p>
+      <button onClick={openModal} className="button">Crear fuente</button>
+      <BootstrapModal show={showModal} handleClose={closeModal} title={'Crear fuente:'}>
+      <form>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Codigo:</label>
+            <input type="text" class="form-control" id="source-code" />
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Nombre:</label>
+            <input type="text" class="form-control" id="source-name" />
+          </div>
+        </form>
       </BootstrapModal>
       <LogoutButton />
       <IndexTable />

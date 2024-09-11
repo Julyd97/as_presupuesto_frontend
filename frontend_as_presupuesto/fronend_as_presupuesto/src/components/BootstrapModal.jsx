@@ -10,10 +10,10 @@ const BootstrapModal = ({ show, handleClose, title, children }) => {
       <Modal.Body>{children}</Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
-          Close
+          Cerrar
         </Button>
         <Button variant="primary" onClick={handleClose}>
-          Save Changes
+          Crear
         </Button>
       </Modal.Footer>
     </Modal>
