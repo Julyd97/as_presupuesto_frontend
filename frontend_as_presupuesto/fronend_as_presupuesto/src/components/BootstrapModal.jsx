@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
-const BootstrapModal = ({ show, handleClose, title, children }) => {
+const BootstrapModal = ({ show, handleClose, handleSubmit, title, children }) => {
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
@@ -12,7 +12,7 @@ const BootstrapModal = ({ show, handleClose, title, children }) => {
         <Button variant="secondary" onClick={handleClose}>
           Cerrar
         </Button>
-        <Button variant="primary" onClick={handleClose}>
+        <Button type='submit' variant="primary" onClick={handleSubmit} >
           Crear
         </Button>
       </Modal.Footer>
