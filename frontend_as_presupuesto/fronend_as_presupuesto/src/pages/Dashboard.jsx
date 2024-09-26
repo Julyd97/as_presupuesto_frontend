@@ -11,6 +11,10 @@ const Dashboard = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [newCodeSource, setNewCodeSource] = useState('');
   const [newNameSource, setNewNameSource] = useState('');
+  const [alerValues, setAlertValues] = useState({
+    color: '',
+    message: '',
+  })
 
   const openModal = () => {
     setShowModal(true);
@@ -20,6 +24,17 @@ const Dashboard = () => {
     setShowModal(false);
   };
 
+  const openAlert  = () => {
+    setShowAlert(true);
+    setAlertValues({
+      color: 'success',
+      message: 'Source added successfully'
+    })
+  }
+
+  const closeAlert  = () => {
+    setShowAlert(false)
+  }
   const submitModal = (event) => {
     console.log('code', newCodeSource)
     console.log('name', newNameSource)
@@ -31,7 +46,7 @@ const Dashboard = () => {
       console.log(response)
       alert(response)
     })
-    setShowAlert(true);
+    openAlert()
   }
 
   const handleKeyPress = (event) => {
@@ -41,7 +56,7 @@ const Dashboard = () => {
   }
   return (
     <>
-      <AlertMessage show={showAlert}/>
+      <AlertMessage show={showAlert} handleClose={closeAlert} message={alerValues.message} color={alerValues.color}/>
       <h1>This is the dashboard</h1>
       <button onClick={openModal} className="button">Crear fuente</button>
       <BootstrapModal show={showModal} handleClose={closeModal} handleSubmit={submitModal} title={'Crear fuente:'}>

@@ -1,9 +1,10 @@
 import React, { useState } from "react"; 
 import { Alert, Button } from "react-bootstrap"; 
   
-function AlertMessage({show}) {
+function AlertMessage({show, handleClose, message, color}) {
     const mystyle = {  
         position : "fixed",
+        maxHeight : '4em',
         top : "0",
         width : "100%",
         zIndex : "1056",
@@ -13,13 +14,13 @@ function AlertMessage({show}) {
             {show && ( 
                 <Alert 
                     style={mystyle}
-                    variant="danger"
-                    onClose={() => setShow(false)} 
+                    variant={color}
+                    onClose={handleClose} 
                     dismissible
                     fade> 
                       
-                    <Alert.Heading>Error</Alert.Heading> 
-                    <p>Error message goes here.</p> 
+                    <Alert.Heading>{message}</Alert.Heading> 
+                    {/* <p>Error message goes here.</p>  */}
                 </Alert> 
             )} 
         </div> 
