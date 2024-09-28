@@ -36,17 +36,16 @@ const Dashboard = () => {
     setShowAlert(false)
   }
   const submitModal = (event) => {
-    console.log('code', newCodeSource)
-    console.log('name', newNameSource)
-
     Sourceservices.create({
       "code" : newCodeSource,
       "name" : newNameSource
     }).then(response => {
       console.log(response)
       alert(response)
+      openAlert()
+    }).catch(error => {
+      console.log(error)
     })
-    openAlert()
   }
 
   const handleKeyPress = (event) => {
