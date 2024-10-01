@@ -24,11 +24,11 @@ const Dashboard = () => {
     setShowModal(false);
   };
 
-  const openAlert  = () => {
+  const openAlert  = ({color, message}) => {
     setShowAlert(true);
     setAlertValues({
-      color: 'success',
-      message: 'Source added successfully'
+      color: color,
+      message: message
     })
   }
 
@@ -41,10 +41,10 @@ const Dashboard = () => {
       "name" : newNameSource
     }).then(response => {
       console.log(response)
-      alert(response)
-      openAlert()
+      openAlert({color :   'success', message : 'La cuenta se creo de forma exitosa'})
     }).catch(error => {
-      console.log(error)
+      console.log(error.response.data )
+      openAlert({color : 'danger', message : 'Error al crear la cuenta'})
     })
   }
 
@@ -59,7 +59,7 @@ const Dashboard = () => {
       <h1>This is the dashboard</h1>
       <button onClick={openModal} className="button">Crear fuente</button>
       <BootstrapModal show={showModal} handleClose={closeModal} handleSubmit={submitModal} title={'Crear fuente:'}>
-      <form onSubmit={submitModal}>
+      <form>
           <div class="mb-3">
             <label for="recipient-name" class="col-form-label">Codigo:</label>
             <input required type="text" value={newCodeSource} class="form-control" onChange={({target}) => setNewCodeSource(target.value)} id="source-code" onKeyDown={handleKeyPress}/>
