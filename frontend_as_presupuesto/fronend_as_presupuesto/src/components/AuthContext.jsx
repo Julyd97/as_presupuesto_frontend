@@ -34,7 +34,6 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('refresh_token', response.data.refresh);
     axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.access}`;
     setIsAuthenticated(true);
-    console.log(isAuthenticated)
     navigate('/dashboard'); // Redirect to dashboard after login
     }
     catch(error){

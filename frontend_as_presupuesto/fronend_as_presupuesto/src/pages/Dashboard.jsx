@@ -1,13 +1,15 @@
 import React from "react";
 import { useState } from "react";
 import LogoutButton from "../components/LogoutButton";
-import BootstrapModal from "../components/BootstrapModal";
+import BudgetItemCreationModal from "../components/BudgetItemCreationModal";
 import IndexTable from "../components/IndexTable";
 import Sourceservices from "../services/Source";
 import AlertMessage from "../components/AlertMessage";
+import SourceCreationModal from "../components/SourceCreationModal";
 
 const Dashboard = () => {
-  const [showModal, setShowModal] = useState(false);
+  const [showSourceModal, setShowSourceModal] = useState(false);
+  const [showBudgetItemModal, setShowBudgetItemModal] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [newCodeSource, setNewCodeSource] = useState('');
   const [newNameSource, setNewNameSource] = useState('');
@@ -16,14 +18,20 @@ const Dashboard = () => {
     message: '',
   })
 
-  const openModal = () => {
-    setShowModal(true);
+  const openSourceModal = () => {
+    setShowSourceModal(true);
+  };
+  const openBudgetItemModal = () => {
+    setShowBudgetItemModal(true);
   };
 
-  const closeModal = () => {
-    setShowModal(false);
+  const closeSourceModal = () => {
+    setShowSourceModal(false);
   };
 
+  const closeBudgetItemModal = () => {
+    setShowBudgetItemModal(false);
+  };
   const openAlert  = ({color, message}) => {
     setShowAlert(true);
     setAlertValues({
@@ -36,6 +44,7 @@ const Dashboard = () => {
     setShowAlert(false)
   }
   const submitModal = (event) => {
+    event.preventDefault()
     Sourceservices.create({
       "code" : newCodeSource,
       "name" : newNameSource
@@ -47,29 +56,14 @@ const Dashboard = () => {
       openAlert({color : 'danger', message : 'Error al crear la cuenta'})
     })
   }
-
-  const handleKeyPress = (event) => {
-    if (event.keyCode === 13 || event.which === 13) {
-      submitModal()
-    }
-  }
   return (
     <>
       <AlertMessage show={showAlert} handleClose={closeAlert} message={alerValues.message} color={alerValues.color}/>
       <h1>This is the dashboard</h1>
-      <button onClick={openModal} className="button">Crear fuente</button>
-      <BootstrapModal show={showModal} handleClose={closeModal} handleSubmit={submitModal} title={'Crear fuente:'}>
-      <form>
-          <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">Codigo:</label>
-            <input required type="text" value={newCodeSource} class="form-control" onChange={({target}) => setNewCodeSource(target.value)} id="source-code" onKeyDown={handleKeyPress}/>
-          </div>
-          <div class="mb-3">
-            <label for="message-text" class="col-form-label">Nombre:</label>
-            <input required type="text" value={newNameSource} class="form-control" onChange={({target}) => setNewNameSource(target.value)}  id="source-name" onKeyDown={handleKeyPress} />
-          </div>
-      </form>
-      </BootstrapModal>
+      <button onClick={openSourceModal} className="button">Crear fuente</button>
+      <button onClick={openBudgetItemModal} className="button">Crear Rubro</button>
+      <SourceCreationModal show={showSourceModal} handleClose={closeSourceModal} handleSubmit={submitModal} title={'Crear fuente:'} setname={setNewNameSource} setcode={setNewCodeSource}/>
+      <BudgetItemCreationModal show={showBudgetItemModal} handleClose={closeBudgetItemModal} title={'Crear Rubro:'}/>
       <LogoutButton />
       <IndexTable />
     </>

@@ -15,13 +15,16 @@ function AlertMessage({show, handleClose, message, color}) {
                 <Alert 
                     style={mystyle}
                     variant={color}
-                    onClose={handleClose} 
+                    onClose={handleClose}
+                    className="alert-dismissible fade show"
                     dismissible
-                    fade> 
+
+                    role="alert"
+                    > 
                       
                     <Alert.Heading>{message}</Alert.Heading> 
                     {/* <p>Error message goes here.</p>  */}
-                </Alert> 
+                </Alert>
             )} 
         </div> 
     ); 
