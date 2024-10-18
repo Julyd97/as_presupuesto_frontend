@@ -6,6 +6,7 @@ import IndexTable from "../components/IndexTable";
 import Sourceservices from "../services/Source";
 import AlertMessage from "../components/AlertMessage";
 import SourceCreationModal from "../components/SourceCreationModal";
+import BudgetItemTable from "../components/BudgetItemTable";
 
 const Dashboard = () => {
   const [showSourceModal, setShowSourceModal] = useState(false);
@@ -65,7 +66,7 @@ const Dashboard = () => {
       <SourceCreationModal show={showSourceModal} handleClose={closeSourceModal} handleSubmit={submitModal} title={'Crear fuente:'} setname={setNewNameSource} setcode={setNewCodeSource}/>
       <BudgetItemCreationModal show={showBudgetItemModal} handleClose={closeBudgetItemModal} title={'Crear Rubro:'}/>
       <LogoutButton />
-      <IndexTable />
+      <BudgetItemTable/>
     </>
   );
 };

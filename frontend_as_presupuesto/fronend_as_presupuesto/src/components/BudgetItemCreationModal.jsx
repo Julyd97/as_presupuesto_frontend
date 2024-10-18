@@ -1,12 +1,29 @@
 import React from 'react';
 import { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import BudgetItemservices from '../services/BudgetItem';
 
 const BudgetItemCreationModal = ({ show, handleClose, handleSubmit, title, code, name, setname, setcode}) => {
-  const [ type, setType] = useState('ingreso');
+  const [ type, setType ] = useState(true);
+  const [ budgetItemCode, setBudgetItemCode] = useState('')
+  const [ budgetItemName, setBudgetItemName ] = useState('')
 
-  const onOptionChange = (e) =>{
+    const onOptionChange = (e) =>{
     setType(e.target.value)
+  }
+  const submitModal = (event) => {
+    event.preventDefault();
+    console.log(budgetItemCode, budgetItemName)
+    BudgetItemservices.create({
+      "code" : budgetItemCode,
+      "name" : budgetItemName,
+      "is_income" : type
+    }).then(response =>{
+      console.log(response)
+    }).catch(error => {
+      console.log(error)
+      console.log(budgetItemCode)
+    })
   }
   return (
     <Modal show={show} onHide={handleClose}>
@@ -14,24 +31,25 @@ const BudgetItemCreationModal = ({ show, handleClose, handleSubmit, title, code,
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={submitModal}>
           <div className="mb-3">
-            <label for="recipient-name" className="col-form-label">Codigo:</label>
-            <input required type="number" value={code} class="form-control" onChange={({target}) => setcode(target.value)} id="source-code"/>
+            <label htmlFor="recipient-name" className="col-form-label">Codigo:</label>
+            <input required type="number" value={budgetItemCode} className="form-control" onChange={({target}) => setBudgetItemCode(target.value)} id="budgetitem-code"/>
           </div>
-          <div class="mb-3">
-            <label for="message-text" className="col-form-label">Nombre:</label>
-            <input required type="text" value={name} className="form-control" onChange={({target}) => setname(target.value)}  id="source-name" />
+          <div className="mb-3">
+            <label htmlFor="message-text" className="col-form-label">Nombre:</label>
+            <input required type="text" value={budgetItemName} className="form-control" onChange={({target}) => setBudgetItemName(target.value)}  id="bugetitem-name" />
           </div>
           <div className='row'>
             <div className="col-6">
+              <label className="col-form-label">Tipo:</label>
                 <div className='form-check'>
                     <input 
                       className='form-check-input'
                       type="radio"
-                      value='ingreso'
+                      value='true'
                       id='radioingreso'
-                      checked = { type === 'ingreso'}
+                      checked = { type === 'true'}
                       onChange={onOptionChange}
                       />
                     <label htmlFor="radioingreso">Ingreso</label>
@@ -40,9 +58,9 @@ const BudgetItemCreationModal = ({ show, handleClose, handleSubmit, title, code,
                     <input 
                       className='form-check-input' 
                       type="radio"
-                      value='egreso' 
+                      value='false' 
                       id='radioegreso'
-                      checked = { type === 'egreso'}
+                      checked = { type === 'false'}
                       onChange={onOptionChange}
                     />
                     <label htmlFor="radioegreso">Egreso</label>

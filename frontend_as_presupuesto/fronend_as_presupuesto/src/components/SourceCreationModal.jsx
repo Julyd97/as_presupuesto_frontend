@@ -11,7 +11,7 @@ const SourceCreationModal = ({ show, handleClose, handleSubmit, title, code, nam
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label for="recipient-name" className="col-form-label">Codigo:</label>
-            <input required type="number" value={code} class="form-control" onChange={({target}) => setcode(target.value)} id="source-code"/>
+            <input required type="number" value={code} className="form-control" onChange={({target}) => setcode(target.value)} id="source-code"/>
           </div>
           <div className="mb-3">
             <label for="message-text" className="col-form-label">Nombre:</label>
