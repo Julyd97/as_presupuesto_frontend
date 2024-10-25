@@ -18,6 +18,8 @@ const Dashboard = () => {
     color: '',
     message: '',
   })
+  const [ rows, setRows ] = useState([{}]);
+  const [ rowToEdit, setRowToEdit ] = useState(null);
 
   const openSourceModal = () => {
     setShowSourceModal(true);
@@ -57,6 +59,14 @@ const Dashboard = () => {
       openAlert({color : 'danger', message : 'Error al crear la cuenta'})
     })
   }
+  const handleDeleteRow = (idx) => {
+    setRows(rows.filter((_, idx) => idx !== targetIndex));  
+  }
+
+  const handleEditRow = (idx) => {
+    setRowToEdit(idx);
+    setShowBudgetItemModal(true);
+  }
   return (
     <>
       <AlertMessage show={showAlert} handleClose={closeAlert} message={alerValues.message} color={alerValues.color}/>
@@ -66,7 +76,7 @@ const Dashboard = () => {
       <SourceCreationModal show={showSourceModal} handleClose={closeSourceModal} handleSubmit={submitModal} title={'Crear fuente:'} setname={setNewNameSource} setcode={setNewCodeSource}/>
       <BudgetItemCreationModal show={showBudgetItemModal} handleClose={closeBudgetItemModal} title={'Crear Rubro:'}/>
       <LogoutButton />
-      <BudgetItemTable/>
+      <BudgetItemTable rows={rows} deleteRow={handleDeleteRow} editRow={handleEditRow}/>
     </>
   );
 };

@@ -99,10 +99,10 @@ const IndexTable = () => {
         ))}
       </thead>
       <tbody {...getTableBodyProps()}>
-        {rows.map((row) => {
+        {rows.map((row, idx) => {
           prepareRow(row);
           return (
-            <tr {...row.getRowProps()}>
+            <tr {...row.getRowProps()} key={idx}>
               {row.cells.map((cell) => (
                 <td
                   {...cell.getCellProps()}

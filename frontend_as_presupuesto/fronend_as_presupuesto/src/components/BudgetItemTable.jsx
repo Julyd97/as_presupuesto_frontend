@@ -1,51 +1,47 @@
 import React from "react";
-import { useState } from "react";
-import { useTable } from "react-table";
+import { BsFillPencilFill, BsFillTrashFill } from "react-icons/bs";
 
 
-export default function BudgetItemTable() {
-  const [editRowId, setEditRowId] = useState(null);
-  const handleEditClick = (rowId) => {
-    setEditRowId(rowId);
-  };
-
-  const data = React.useMemo(
-    () => [
-        { code:1, nombre:'hola', tipo:'ingreso'} 
-    ],
-    []
-)
-const columns = React.useMemo(
-  () => [
-    { Header: "Codigo", accessor: "codigo" },
-    { Header: "Nombre", accessor: "nombre" },
-    { Header: "Tipo", accessor: "tipo" },
-  ],
-  []
-);
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data });
-
+const BudgetItemTable = ({rows, deleteRow, editRow}) => {
   return (
-    <table>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row) => {
-          prepareRow(row);
+    <table className="table">
+      <thead>
+          <tr>
+            <th>Codigo</th>
+            <th className="expand">Nombre</th>
+            <th>Tipo</th>
+          </tr>
+      </thead>
+      <tbody>
+        {rows.map((row,idx) => {
+          const statusText = row.status; 
           return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map((cell) => {
-                return (
-                  <td {...cell.getCellProps()}>
-                    {editRowId === row.id
-                      ? console.log("hola")
-                      : console.log("no")}
-                  </td>
-                );
-              })}
-            </tr>
+            <tr key={idx}>
+                <td>{row.page}</td>
+                <td className="expand">{row.description}</td>
+                <td>
+                  <span className={`label label-${row.status}`}>
+                    {statusText}
+                  </span>
+                </td>
+                <td className="fit">
+                  <span className="actions">
+                    <BsFillTrashFill
+                      className="delete-btn"
+                      onClick={() => deleteRow(idx)}
+                    />
+                    <BsFillPencilFill
+                      className="edit-btn"
+                      onClick={() => editRow(idx)}
+                    />
+                  </span>
+                </td>
+              </tr>
           );
         })}
       </tbody>
     </table>
   );
 }
+
+export default BudgetItemTable
