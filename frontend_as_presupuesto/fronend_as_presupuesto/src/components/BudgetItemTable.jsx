@@ -14,7 +14,7 @@ const BudgetItemTable = ({rows, deleteRow, editRow}) => {
       </thead>
       <tbody>
         {rows.map((row,idx) => {
-          const statusText = row.status; 
+          const statusText = row.status.charAt(0).toUpperCase() + row.status.slice(1); 
           return (
             <tr key={idx}>
                 <td>{row.page}</td>

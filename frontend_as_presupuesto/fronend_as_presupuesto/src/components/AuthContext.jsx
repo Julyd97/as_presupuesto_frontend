@@ -15,12 +15,12 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   // Optionally, check if the user is already authenticated when the component mounts
-  useEffect(() => {
-    const token = localStorage.getItem('access_token');
-    if (token) {
-      setIsAuthenticated(true);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const token = localStorage.getItem('access_token');
+  //   if (token) {
+  //     setIsAuthenticated(true);
+  //   }
+  // }, []);
 
   const login = async(e, email, password) => {
     // Login Logic

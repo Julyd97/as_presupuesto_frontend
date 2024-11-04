@@ -1,8 +1,10 @@
 import React from "react";
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import LogoutButton from "../components/LogoutButton";
 import BudgetItemCreationModal from "../components/BudgetItemCreationModal";
 import IndexTable from "../components/IndexTable";
+import TableBudgetItem from "../components/BudgetItem/TableBudgetItem";
 import Sourceservices from "../services/Source";
 import AlertMessage from "../components/AlertMessage";
 import SourceCreationModal from "../components/SourceCreationModal";
@@ -18,7 +20,43 @@ const Dashboard = () => {
     color: '',
     message: '',
   })
-  const [ rows, setRows ] = useState([{}]);
+  const [ budgetItems, setBudgetItem ] = useState([]);
+
+  useEffect (() => {
+    updateTableBudgetItems()
+  },[])
+  const updateTableBudgetItems  = () => {
+    axios.get("http://localhost:8000/api/budget/budgetitems/")
+      .then(function(response){
+        console.log(response.data)
+        setBudgetItem(response.data)
+      })
+  }
+  const onUpdateBudgetItem = (updatedBudgetItem) => {
+    const updated =  budgetItems.map(budgetItem => {
+      if (budgetItem.id === updatedBudgetItem.id) {
+        return updatedBudgetItem;
+      } else { return budgetItem}
+      }
+    )
+    setBudgetItem(updated)
+  }
+  const [ rows, setRows ] = useState([{
+    page: "Home",
+    description: "This is the main page of the website",
+    status: "live",
+  },
+  {
+    page: "About Us",
+    description: "This page has details about the company",
+    status: "draft",
+  },
+  {
+    page: "Pricing",
+    description: "Prices for different subscriptions",
+    status: "error",
+  },
+]);
   const [ rowToEdit, setRowToEdit ] = useState(null);
 
   const openSourceModal = () => {
@@ -59,13 +97,29 @@ const Dashboard = () => {
       openAlert({color : 'danger', message : 'Error al crear la cuenta'})
     })
   }
-  const handleDeleteRow = (idx) => {
+  const handleDeleteRow = (targetIndex) => {
     setRows(rows.filter((_, idx) => idx !== targetIndex));  
   }
 
   const handleEditRow = (idx) => {
     setRowToEdit(idx);
     setShowBudgetItemModal(true);
+  }
+
+  // const handleSubmitBudgetItem = (newRow) => {
+  //   rowToEdit === null
+  //     ? setRows([...rows, newRow])
+  //     : setRows(
+  //         rows.map((currRow, idx) => {
+  //           if (idx !== rowToEdit) return currRow;
+
+  //           return newRow;
+  //         })
+  //       );
+  // };
+
+  const handleSubmitBudgetItem = () =>{
+    setBudgetItem([''])
   }
   return (
     <>
@@ -74,9 +128,10 @@ const Dashboard = () => {
       <button onClick={openSourceModal} className="button">Crear fuente</button>
       <button onClick={openBudgetItemModal} className="button">Crear Rubro</button>
       <SourceCreationModal show={showSourceModal} handleClose={closeSourceModal} handleSubmit={submitModal} title={'Crear fuente:'} setname={setNewNameSource} setcode={setNewCodeSource}/>
-      <BudgetItemCreationModal show={showBudgetItemModal} handleClose={closeBudgetItemModal} title={'Crear Rubro:'}/>
+      <BudgetItemCreationModal show={showBudgetItemModal} handleClose={closeBudgetItemModal} title={'Crear Rubro:'} handleSubmit={updateTableBudgetItems}/>
       <LogoutButton />
-      <BudgetItemTable rows={rows} deleteRow={handleDeleteRow} editRow={handleEditRow}/>
+      <BudgetItemTable rows={rows} deleteRow={handleDeleteRow} editRow={handleEditRow} />
+      <TableBudgetItem budgetitems={budgetItems} onUpdateBudgetItem={onUpdateBudgetItem}/>
     </>
   );
 };

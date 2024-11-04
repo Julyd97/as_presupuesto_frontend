@@ -4,22 +4,33 @@ import { Modal, Button } from 'react-bootstrap';
 import BudgetItemservices from '../services/BudgetItem';
 
 const BudgetItemCreationModal = ({ show, handleClose, handleSubmit, title, code, name, setname, setcode}) => {
+  const [ formState, setFormState ] = useState(
+    {
+      code: '',
+      name: '',
+      is_income: '',
+    }
+  );
   const [ type, setType ] = useState(true);
   const [ budgetItemCode, setBudgetItemCode] = useState('')
   const [ budgetItemName, setBudgetItemName ] = useState('')
 
-    const onOptionChange = (e) =>{
+  const handleChange = (e) => {
+    setFormState({ ...formState, [e.target.name]: e.target.value });
+  };
+  const onOptionChange = (e) =>{
     setType(e.target.value)
   }
   const submitModal = (event) => {
     event.preventDefault();
-    console.log(budgetItemCode, budgetItemName)
     BudgetItemservices.create({
       "code" : budgetItemCode,
       "name" : budgetItemName,
       "is_income" : type
     }).then(response =>{
       console.log(response)
+      handleSubmit()
+      console.log('hola')
     }).catch(error => {
       console.log(error)
       console.log(budgetItemCode)

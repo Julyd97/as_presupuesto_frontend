@@ -18,7 +18,7 @@ const deleteObject = id =>{
 }
 
 const update = (id, newObject) => {
-    const promise = axios.put(`${baseURL}/${id}`, newObject)
+    const promise = axios.put(`${baseURL}${id}/`, newObject)
     return promise.then(response => response.data)
 }
 
