@@ -39,3 +39,11 @@
 .read-the-docs {
   color: #888;
 }
+td{
+  height: 64px;
+  width: 25%;
+}
+.actionButton{
+  padding: 0;
+  border: 0;
+}

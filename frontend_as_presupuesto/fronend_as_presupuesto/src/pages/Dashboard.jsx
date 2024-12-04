@@ -130,8 +130,8 @@ const Dashboard = () => {
       <SourceCreationModal show={showSourceModal} handleClose={closeSourceModal} handleSubmit={submitModal} title={'Crear fuente:'} setname={setNewNameSource} setcode={setNewCodeSource}/>
       <BudgetItemCreationModal show={showBudgetItemModal} handleClose={closeBudgetItemModal} title={'Crear Rubro:'} handleSubmit={updateTableBudgetItems}/>
       <LogoutButton />
-      <BudgetItemTable rows={rows} deleteRow={handleDeleteRow} editRow={handleEditRow} />
-      <TableBudgetItem budgetitems={budgetItems} onUpdateBudgetItem={onUpdateBudgetItem}/>
+      {/* <BudgetItemTable rows={rows} deleteRow={handleDeleteRow} editRow={handleEditRow} /> */}
+      <TableBudgetItem budgetitems={budgetItems} onUpdateBudgetItem={updateTableBudgetItems}/>
     </>
   );
 };
