@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import BudgetItemservices from '../services/BudgetItem';
 
-const BudgetItemCreationModal = ({ show, handleClose, handleSubmit, title, code, name, setname, setcode}) => {
+const BudgetItemCreationModal = ({ show, handleClose, handleSubmit, title, alert, parentId}) => {
   const [ formState, setFormState ] = useState(
     {
       code: '',
@@ -26,14 +26,17 @@ const BudgetItemCreationModal = ({ show, handleClose, handleSubmit, title, code,
     BudgetItemservices.create({
       "code" : budgetItemCode,
       "name" : budgetItemName,
-      "is_income" : type
+      "is_income" : type,
+      "parent" : parentId
     }).then(response =>{
-      console.log(response)
+      alert({color :   'success', message : 'El rubro se creo de forma exitosa.'})
       handleSubmit()
-      console.log('hola')
+      setBudgetItemCode('')
+      setBudgetItemName('')
+      setType(false)
     }).catch(error => {
       console.log(error)
-      console.log(budgetItemCode)
+      alert({color :   'danger', message : 'Imposible generar el rubro deseado'})
     })
   }
   return (

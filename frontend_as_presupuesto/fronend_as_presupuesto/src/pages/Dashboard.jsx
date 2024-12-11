@@ -124,14 +124,13 @@ const Dashboard = () => {
   return (
     <>
       <AlertMessage show={showAlert} handleClose={closeAlert} message={alerValues.message} color={alerValues.color}/>
-      <h1>This is the dashboard</h1>
       <button onClick={openSourceModal} className="button">Crear fuente</button>
       <button onClick={openBudgetItemModal} className="button">Crear Rubro</button>
       <SourceCreationModal show={showSourceModal} handleClose={closeSourceModal} handleSubmit={submitModal} title={'Crear fuente:'} setname={setNewNameSource} setcode={setNewCodeSource}/>
-      <BudgetItemCreationModal show={showBudgetItemModal} handleClose={closeBudgetItemModal} title={'Crear Rubro:'} handleSubmit={updateTableBudgetItems}/>
+      <BudgetItemCreationModal show={showBudgetItemModal} handleClose={closeBudgetItemModal} title={'Crear Rubro:'} handleSubmit={updateTableBudgetItems} alert={openAlert}/>
       <LogoutButton />
       {/* <BudgetItemTable rows={rows} deleteRow={handleDeleteRow} editRow={handleEditRow} /> */}
-      <TableBudgetItem budgetitems={budgetItems} onUpdateBudgetItem={updateTableBudgetItems}/>
+      <TableBudgetItem budgetitems={budgetItems} onUpdateBudgetItem={updateTableBudgetItems} alert={openAlert}/>
     </>
   );
 };

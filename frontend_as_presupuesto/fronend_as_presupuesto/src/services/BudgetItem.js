@@ -13,7 +13,7 @@ const create = newObject =>{
 }
 
 const deleteObject = id =>{
-    const promise = axios.delete(`${baseURL}/${id}`)
+    const promise = axios.delete(`${baseURL}${id}/`)
     return promise.then(response => response.data)
 }
 

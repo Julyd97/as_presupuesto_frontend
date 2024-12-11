@@ -2,7 +2,6 @@ import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
 const BudgetItemEliminationModal = ({ show, handleClose, handleSubmit, title, budgetItem}) => {
-  console.log(budgetItem)
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
@@ -11,7 +10,7 @@ const BudgetItemEliminationModal = ({ show, handleClose, handleSubmit, title, bu
       <Modal.Body>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label for="recipient-name" className="col-form-label">Seguro desea eliminar el rubro # {budgetItem}</label>
+            <label for="recipient-name" className="col-form-label">Seguro desea eliminar el rubro # {budgetItem.code}</label>
           </div>
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>

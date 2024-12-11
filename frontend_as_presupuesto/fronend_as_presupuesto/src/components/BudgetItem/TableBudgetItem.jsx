@@ -5,22 +5,25 @@ import {
   BsFillTrashFill,
   BsFillFloppy2Fill,
   BsXLg,
+  BsPlusCircle
 } from "react-icons/bs";
 
 import BudgetItemservices from "../../services/BudgetItem";
 import BudgetItemEliminationModal from "./BudgetItemEliminationModal";
+import BudgetItemCreationModal from "../BudgetItemCreationModal";
 
-function TableBudgetItem({ budgetitems, onUpdateBudgetItem }) {
+function TableBudgetItem({ budgetitems, onUpdateBudgetItem, alert }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showCreationModal, setShowCreationModal] = useState(false);
   const [editForm, setEditForm] = useState({
     id: "",
     code: "",
     name: "",
     is_income: "",
   });
+  const [ parentId, setParentId ] = useState("");
   const [editID, setEditID] = useState("");
   function handleBudgetItemUpdate(updatedBudgetItem) {
-    setIsEditing(false);
     onUpdateBudgetItem(updatedBudgetItem);
   }
 
@@ -50,27 +53,57 @@ function TableBudgetItem({ budgetitems, onUpdateBudgetItem }) {
     );
     setEditID("");
   }
+
   function handleCancel() {
     setEditID("");
   }
 
-  function openBudgetItemModal(){
+  function handleDelete(e) {
+    e.preventDefault();
+    BudgetItemservices.deleteObject(editForm.id).then(
+      (updateBudgetItem) => {
+        handleBudgetItemUpdate(updateBudgetItem);
+        alert({color :   'success', message : 'El rubro se elimino de forma exitosa'})
+      }
+    );
+    setEditID("");
+    closeBudgetItemModal()
+  }
+
+  function openBudgetItemModal(budgetItem){
     setShowDeleteModal(true)
+    setEditForm({
+      id: budgetItem.id,
+      code: budgetItem.code,
+      name: budgetItem.name,
+      is_income: budgetItem.is_income,
+    });
   }
   
   function closeBudgetItemModal(){
     setShowDeleteModal(false)
   }
 
+  function closeCreationModal(){
+    setShowCreationModal(false)
+  }
+
+  function getParentId(budgetItem){
+    setShowCreationModal(true)
+    setParentId(budgetItem.id)
+  }
+
   return (
     <div>
-        <BudgetItemEliminationModal show={showDeleteModal} handleClose={closeBudgetItemModal} budgetItem={this}/>
+        <BudgetItemEliminationModal show={showDeleteModal} handleSubmit={handleDelete} handleClose={closeBudgetItemModal} budgetItem={editForm}/>
+        <BudgetItemCreationModal show={showCreationModal} handleClose={closeCreationModal} title={'Crear Rubro: '} handleSubmit={onUpdateBudgetItem} alert={alert} parentId={parentId}/>
       <table className="table">
         <thead>
           <tr>
             <th>Codigo</th>
             <th>Nombre</th>
             <th>Tipo</th>
+            <th></th>
             <th></th>
           </tr>
         </thead>
@@ -123,10 +156,19 @@ function TableBudgetItem({ budgetitems, onUpdateBudgetItem }) {
                   <button
                     className="actionButton"
                     onClick={() => {
-                        openBudgetItemModal();
+                        openBudgetItemModal(budgetItem);
                     }}
                   >
                     <BsFillTrashFill />
+                  </button>
+                </td>
+                <td>
+                  <button
+                    className="actionButto"
+                    onClick={() => {
+                      getParentId(budgetItem);
+                    }}>
+                    <BsPlusCircle/>
                   </button>
                 </td>
               </tr>
