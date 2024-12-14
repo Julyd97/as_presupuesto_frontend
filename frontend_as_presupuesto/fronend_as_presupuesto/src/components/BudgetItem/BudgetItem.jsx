@@ -2,24 +2,23 @@ import React from "react";
 
 function BudgetItem({
   budgetitem,
-  budgetitem: { id, code, name, is_income },
-  captureEdit,
-  changeEditState,
-  isEditing,
+  editForm,
   handleEdit,
   handleChange,
+  handleCancel,
   editID,
 }) {
   console.log(editID);
   return (
     <>
-      {id === editID ? (
-        <tr key={id}>
+      {budgetitem.id === editID ? (
+        <tr>
           <td>
             <input
               type="number"
               name="code"
-              value={code}
+              className="form-control"
+              value={editForm.code}
               onChange={handleChange}
             />
           </td>
@@ -27,43 +26,52 @@ function BudgetItem({
             <input
               type="text"
               name="name"
-              value={name}
+              className="form-control"
+              value={editForm.name}
               onChange={handleChange}
             />
           </td>
+          <td>{budgetitem.is_income ? "Ingreso" : "Egreso"}</td>
           <td>
-            <input
-              type="text"
-              name="is_income"
-              value={is_income}
-              onChange={handleChange}
-            />
-          </td>
-          <td>
-            <button
-            // onClick={() => {
-            //   captureEdit(budgetitem);
-            //   changeEditState(budgetitem);
-            // }}
-            >
-              Guardar
+            <button onClick={handleSave} className="actionButton">
+              <BsFillFloppy2Fill />
+            </button>
+            <button className="actionButton" onClick={handleCancel}>
+              <BsXLg />
             </button>
           </td>
         </tr>
       ) : (
-        <tr key={id}>
-          <td>{code}</td>
-          <td>{name}</td>
+        <tr key={index}>
+          <td>{budgetitem.code}</td>
+          <td>{budgetitem.name}</td>
           <td>{is_income ? "Ingreso" : "Egreso"}</td>
           <td>
             <button
+              className="actionButton"
               onClick={() => {
-                handleEdit(id);
-                // captureEdit(budgetitem);
-                // changeEditState(budgetitem);
+                handleEdit(budgetitem);
               }}
             >
-              Editar
+              <BsFillPencilFill />
+            </button>
+            <button
+              className="actionButton"
+              onClick={() => {
+                openBudgetItemModal(budgetitem);
+              }}
+            >
+              <BsFillTrashFill />
+            </button>
+          </td>
+          <td>
+            <button
+              className="actionButto"
+              onClick={() => {
+                getParentId(budgetitem);
+              }}
+            >
+              <BsPlusCircle />
             </button>
           </td>
         </tr>
