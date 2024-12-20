@@ -1,14 +1,26 @@
 import React from "react";
 
+import {
+  BsFillPencilFill,
+  BsFillTrashFill,
+  BsFillFloppy2Fill,
+  BsXLg,
+  BsPlusCircle,
+} from "react-icons/bs";
+
 function BudgetItem({
   budgetitem,
   editForm,
   handleEdit,
   handleChange,
   handleCancel,
+  handleSave,
   editID,
+  openBudgetItemModal,
+  getParentId,
+  level
 }) {
-  console.log(editID);
+  const space = `${level ? 20 + 15 * level : 8}px`;
   return (
     <>
       {budgetitem.id === editID ? (
@@ -42,10 +54,10 @@ function BudgetItem({
           </td>
         </tr>
       ) : (
-        <tr key={index}>
-          <td>{budgetitem.code}</td>
+        <tr>
+          <td style={{ paddingLeft: space }}>{budgetitem.code}</td>
           <td>{budgetitem.name}</td>
-          <td>{is_income ? "Ingreso" : "Egreso"}</td>
+          <td>{budgetitem.is_income ? "Ingreso" : "Egreso"}</td>
           <td>
             <button
               className="actionButton"
@@ -76,6 +88,13 @@ function BudgetItem({
           </td>
         </tr>
       )}
+      { budgetitem.children?.map((child) =>{
+        return(
+          <BudgetItem key={child.id} budgetitem={child} editForm={editForm} handleEdit={handleEdit} openBudgetItemModal={openBudgetItemModal} editID={editID} handleSave={handleSave} handleChange={handleChange} handleCancel={handleCancel} getParentId={getParentId} level={level +1} />
+        )
+      })
+
+      }
     </>
   );
 }

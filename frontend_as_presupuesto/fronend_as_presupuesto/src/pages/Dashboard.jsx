@@ -8,7 +8,7 @@ import TableBudgetItem from "../components/BudgetItem/TableBudgetItem";
 import Sourceservices from "../services/Source";
 import AlertMessage from "../components/AlertMessage";
 import SourceCreationModal from "../components/SourceCreationModal";
-import BudgetItemTable from "../components/BudgetItemTable";
+import BudgetItemTable from "../components/BudgetItem/BudgetItemTable";
 
 const Dashboard = () => {
   const [showSourceModal, setShowSourceModal] = useState(false);
@@ -127,10 +127,10 @@ const Dashboard = () => {
       <button onClick={openSourceModal} className="button">Crear fuente</button>
       <button onClick={openBudgetItemModal} className="button">Crear Rubro</button>
       <SourceCreationModal show={showSourceModal} handleClose={closeSourceModal} handleSubmit={submitModal} title={'Crear fuente:'} setname={setNewNameSource} setcode={setNewCodeSource}/>
-      <BudgetItemCreationModal show={showBudgetItemModal} handleClose={closeBudgetItemModal} title={'Crear Rubro:'} handleSubmit={updateTableBudgetItems} alert={openAlert}/>
+      <BudgetItemCreationModal show={showBudgetItemModal} handleClose={closeBudgetItemModal} title={'Crear Rubro:'} handleSubmit={updateTableBudgetItems} alert={openAlert} parentId={null}/>
       <LogoutButton />
-      {/* <BudgetItemTable rows={rows} deleteRow={handleDeleteRow} editRow={handleEditRow} /> */}
-      <TableBudgetItem budgetitems={budgetItems} onUpdateBudgetItem={updateTableBudgetItems} alert={openAlert}/>
+      <BudgetItemTable budgetitems={budgetItems} onUpdateBudgetItem={updateTableBudgetItems} alert={openAlert}/>
+      {/* <TableBudgetItem budgetitems={budgetItems} onUpdateBudgetItem={updateTableBudgetItems} alert={openAlert}/> */}
     </>
   );
 };

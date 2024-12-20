@@ -47,7 +47,6 @@ const BudgetItemTable = ({ budgetitems, onUpdateBudgetItem, alert }) => {
 
   function handleSave(e) {
     e.preventDefault();
-    console.log(editForm.is_income);
     BudgetItemservices.update(editForm.id, editForm).then(
       (updateBudgetItem) => {
         handleBudgetItemUpdate(updateBudgetItem);
@@ -67,6 +66,12 @@ const BudgetItemTable = ({ budgetitems, onUpdateBudgetItem, alert }) => {
       alert({
         color: "success",
         message: "El rubro se elimino de forma exitosa",
+      });
+    }).catch((error)=>
+    {
+      alert({
+        color: "danger",
+        message: error.response.data.detail,
       });
     });
     setEditID("");
@@ -124,7 +129,7 @@ const BudgetItemTable = ({ budgetitems, onUpdateBudgetItem, alert }) => {
         </thead>
         <tbody>
           {budgetitems.map((budgetItem) =>
-            <BudgetItemn budgetitem={budgetItem} editForm={editForm} handleEdit={handleEdit} />
+            <BudgetItem key={budgetItem.id} budgetitem={budgetItem} editForm={editForm} handleEdit={handleEdit} openBudgetItemModal={openBudgetItemModal} editID={editID} handleSave={handleSave} handleChange={handleChange} handleCancel={handleCancel} getParentId={getParentId} level={0}/>
             )
           }
         </tbody>

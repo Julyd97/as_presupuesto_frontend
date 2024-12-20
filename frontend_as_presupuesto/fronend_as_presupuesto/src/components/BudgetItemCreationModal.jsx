@@ -29,14 +29,13 @@ const BudgetItemCreationModal = ({ show, handleClose, handleSubmit, title, alert
       "is_income" : type,
       "parent" : parentId
     }).then(response =>{
-      alert({color :   'success', message : 'El rubro se creo de forma exitosa.'})
+      alert({color :   'success', message : response.message})
       handleSubmit()
       setBudgetItemCode('')
       setBudgetItemName('')
       setType(false)
     }).catch(error => {
-      console.log(error)
-      alert({color :   'danger', message : 'Imposible generar el rubro deseado'})
+      alert({color :   'danger', message : error.message})
     })
   }
   return (
@@ -54,7 +53,8 @@ const BudgetItemCreationModal = ({ show, handleClose, handleSubmit, title, alert
             <label htmlFor="message-text" className="col-form-label">Nombre:</label>
             <input required type="text" value={budgetItemName} className="form-control" onChange={({target}) => setBudgetItemName(target.value)}  id="bugetitem-name" />
           </div>
-          <div className='row'>
+          { parentId === null ? 
+          (<div className='row'>
             <div className="col-6">
               <label className="col-form-label">Tipo:</label>
                 <div className='form-check'>
@@ -80,7 +80,9 @@ const BudgetItemCreationModal = ({ show, handleClose, handleSubmit, title, alert
                     <label htmlFor="radioegreso">Egreso</label>
                 </div>
             </div>
-          </div>
+          </div>)
+          :(<></>)
+}
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                 Cerrar

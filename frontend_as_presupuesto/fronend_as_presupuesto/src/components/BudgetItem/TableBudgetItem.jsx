@@ -34,6 +34,7 @@ function TableBudgetItem({ budgetitems, onUpdateBudgetItem, alert }) {
     });
   }
   function handleEdit(budgetItem) {
+    console.log(editForm)
     setEditID(budgetItem.id);
     setEditForm({
       id: budgetItem.id,
@@ -41,6 +42,8 @@ function TableBudgetItem({ budgetitems, onUpdateBudgetItem, alert }) {
       name: budgetItem.name,
       is_income: budgetItem.is_income,
     });
+    console.log(editForm)
+    console.log(editID)
   }
 
   function handleSave(e) {
